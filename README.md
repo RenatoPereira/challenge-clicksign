@@ -111,6 +111,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 Como é um teste, eu decidi fazer ele funcional e dei prioridade a mostrar as funcionalidades pedidas no projeto, mas não implementei funcionalidades que não foram solicitadas.
 A seguir eu listo algumas tarefas que poderiam ser implementadas para melhorar o projeto.
 
+Eu usei a biblioteca de Icones `react-icons`, que facilita muito o uso dos ícones e está bem próximo ao de vocês. Pelo nome dos arquivos no Figma é a mesma lógica, mas não achei a lib exata que foi usada.
+
 ### Tarefas futuras sugeridas
 
 - [ ] Implementar virtualização na listagem de projetos
