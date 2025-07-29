@@ -100,11 +100,14 @@ export const Search = () => {
   return (
     <>
       <Button
+        data-testid="search-button"
+        aria-label="Procurar"
         variant="ghost"
         size="icon"
         onClick={() => setOpen((state: boolean) => !state)}
       >
         <SearchIcon />
+        <span className="sr-only">Procurar</span>
       </Button>
 
       {open && (
