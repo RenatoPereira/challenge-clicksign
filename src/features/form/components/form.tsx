@@ -107,6 +107,7 @@ export function ProjectForm({ onSubmit, project }: Props) {
                   <Button variant="clean" className="w-full relative">
                     <FormControl>
                       <Input
+                        placeholder="Data de Início"
                         value={
                           field.value
                             ? formatInputDate(field.value as string)
@@ -143,6 +144,7 @@ export function ProjectForm({ onSubmit, project }: Props) {
                   <Button variant="clean" className="w-full relative">
                     <FormControl>
                       <Input
+                        placeholder="Data Final"
                         value={
                           field.value
                             ? formatInputDate(field.value as string)
@@ -173,7 +175,7 @@ export function ProjectForm({ onSubmit, project }: Props) {
             <FormItem>
               <FormLabel>Capa do Projeto</FormLabel>
               <FormControl>
-                <InputImage field={field} />
+                <InputImage placeholder="Capa do Projeto" field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -6,10 +6,11 @@ import Image from "next/image";
 import { ControllerRenderProps } from "react-hook-form";
 
 interface Props {
+  placeholder?: string;
   field: ControllerRenderProps<any, any>;
 }
 
-export const InputImage = ({ field }: Props) => {
+export const InputImage = ({ field, placeholder }: Props) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -62,6 +63,7 @@ export const InputImage = ({ field }: Props) => {
         className="opacity-0 absolute top-0 left-0 w-full h-full z-50 cursor-pointer"
         type="file"
         accept="image/jpeg, image/png"
+        placeholder={placeholder}
         {...field}
         onChange={handleFileChange}
       />
