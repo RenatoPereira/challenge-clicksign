@@ -17,27 +17,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Passo 1: Configurar Node.js e pnpm
-      # Usa a ação setup-node para configurar o Node.js
-      # E explicitamente informa para instalar o pnpm
-      - name: Set up Node.js and pnpm
+      # Passo 1: Configurar Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20" # Use a versão do Node.js que seu projeto utiliza
-          cache: "pnpm" # Habilita o cache para o pnpm, o que acelera builds subsequentes
+          # Remova a linha 'cache: pnpm' aqui, pois vamos instalar o pnpm explicitamente.
+          # O cache será gerenciado automaticamente pelo pnpm após a instalação.
 
-      # Passo 2: Instalar dependências com pnpm
-      # Roda 'pnpm install'
+      # Passo 2: Instalar pnpm globalmente
+      # Este passo garante que o pnpm esteja disponível no PATH
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Passo 3: Instalar dependências com pnpm
       - name: Install dependencies with pnpm
-        run: pnpm install --frozen-lockfile # '--frozen-lockfile' garante que o lockfile não seja modificado
+        run: pnpm install --frozen-lockfile
 
-      # Passo 3: Rodar ESLint com pnpm
-      # Usa 'pnpm lint'
+      # Passo 4: Rodar ESLint com pnpm
       - name: Run ESLint with pnpm
         run: pnpm lint
 
-      # Passo 4: Rodar Testes Jest/RTL com pnpm
-      # Usa 'pnpm test'
+      # Passo 5: Rodar Testes Jest/RTL com pnpm
       - name: Run Tests with pnpm
         run: pnpm test
         env:
