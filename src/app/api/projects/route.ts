@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getProjects, saveProjects } from "@/database/project.data";
 import { Project, projectSchema } from "@/database/schemas/project";
 import { z } from "zod";
+import { v4 as uuid } from "uuid";
 
 export async function GET() {
   try {
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
     const projects = getProjects();
     const newProject: Project = {
       ...validatedData,
-      id: Date.now().toString(),
+      id: uuid(),
       favorited: false,
     };
 
@@ -44,51 +45,6 @@ export async function POST(request: Request) {
     console.error("Error adding project:", error);
     return NextResponse.json(
       { message: "Error adding project." },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PUT(request: Request) {
-  try {
-    const body = await request.json();
-
-    const validatedData = projectSchema.parse(body);
-
-    const { id, ...updatedFields } = validatedData;
-
-    let projects = getProjects();
-    const projectIndex = projects.findIndex((p: Project) => p.id === id);
-
-    if (projectIndex === -1) {
-      return NextResponse.json(
-        { message: "Project not found." },
-        { status: 404 }
-      );
-    }
-
-    projects[projectIndex] = {
-      ...projects[projectIndex],
-      ...updatedFields,
-      id: projects[projectIndex].id,
-      favorited:
-        typeof updatedFields.favorited === "boolean"
-          ? updatedFields.favorited
-          : projects[projectIndex].favorited,
-    };
-
-    saveProjects(projects);
-    return NextResponse.json(projects[projectIndex], { status: 200 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { errors: error.issues.map((issue) => issue.message) },
-        { status: 400 }
-      );
-    }
-    console.error("Error updating project:", error);
-    return NextResponse.json(
-      { message: "Error updating project." },
       { status: 500 }
     );
   }

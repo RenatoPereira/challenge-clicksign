@@ -16,7 +16,7 @@ export const useSearchStore = create<SearchState>()((set) => ({
         return { search: by };
       }
 
-      let history = state.history.filter((item) => item !== by);
+      const history = state.history.filter((item) => item !== by);
 
       history.unshift(by);
 

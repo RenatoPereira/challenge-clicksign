@@ -6,7 +6,7 @@ import { FormUpdateContainer } from "@/features/form/containers/form-update.cont
 export default async function EditProject({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const project = await projectService.getProjectById(id);

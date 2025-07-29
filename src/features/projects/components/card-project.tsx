@@ -26,16 +26,15 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
-import { AlertDelete } from "../features/projects/components/alert-delete";
-import { ActionFavorite } from "../features/projects/components/action-favorite";
+import { AlertDelete } from "./alert-delete";
+import { ActionFavorite } from "./action-favorite";
 import { HighlightText } from "@/components/highlight-text";
 
-type Props = {
+type ActionProps = {
   project: Project;
-  highlight?: string;
 };
 
-const ProjectCardDropActions = ({ project, highlight }: Props) => {
+const ProjectCardDropActions = ({ project }: ActionProps) => {
   const router = useRouter();
 
   const handleEdit = () => {
@@ -66,16 +65,19 @@ const ProjectCardDropActions = ({ project, highlight }: Props) => {
   );
 };
 
+type Props = {
+  project: Project;
+  highlight?: string;
+};
+
 export const ProjectCard = ({ project, highlight }: Props) => {
-  console.log(project);
   return (
     <Card>
       <CardHeader className="relative overflow-hidden w-full h-[231px]">
         <Image
           src={project.projectCover || EmptyProjectImage.src}
           alt={project.projectName}
-          width={346}
-          height={231}
+          fill
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
         <CardAction>
@@ -91,7 +93,7 @@ export const ProjectCard = ({ project, highlight }: Props) => {
           </HighlightText>
         </CardTitle>
         <CardDescription>
-          <strong className="font-bold">Client:</strong>
+          <strong className="font-bold">Client:</strong>{" "}
           <HighlightText highlightText={highlight}>
             {project.client}
           </HighlightText>

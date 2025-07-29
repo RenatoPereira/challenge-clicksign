@@ -35,9 +35,11 @@ export const AlertDelete = ({ project }: Props) => {
         await projectService.deleteProject(project.id!);
         router.refresh();
         toast.success("Projeto removido com sucesso!");
-      } catch (error: any) {
+      } catch (error: Error | unknown) {
         console.error(error);
-        toast.error(error?.message);
+        toast.error(
+          error instanceof Error ? error.message : "Erro ao remover projeto"
+        );
       }
     });
   };

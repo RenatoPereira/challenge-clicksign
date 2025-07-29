@@ -7,5 +7,5 @@ interface FilterState {
 
 export const useFilterStore = create<FilterState>()((set) => ({
   filter: null,
-  filterBy: (by) => set((state) => ({ filter: by })),
+  filterBy: (by) => set(() => ({ filter: by })),
 }));

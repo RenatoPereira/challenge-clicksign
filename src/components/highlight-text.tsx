@@ -1,5 +1,4 @@
 import { normalizeSearch } from "@/lib/utils";
-import { useSearchStore } from "@/lib/stores/search.store";
 import { Fragment } from "react";
 
 type Props = {

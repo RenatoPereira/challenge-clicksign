@@ -4,8 +4,7 @@ import { toast } from "sonner";
 import { useTransition } from "react";
 import { Project } from "@/database/schemas/project";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { BsStar } from "react-icons/bs";
+import { BsStar, BsStarFill } from "react-icons/bs";
 
 type Props = {
   project: Project;
@@ -25,9 +24,11 @@ export const ActionFavorite = ({ project }: Props) => {
             ? "Projeto favoritado com sucesso!"
             : "Projeto desfavoritado com sucesso!"
         );
-      } catch (error: any) {
+      } catch (error: Error | unknown) {
         console.error(error);
-        toast.error(error?.message);
+        toast.error(
+          error instanceof Error ? error.message : "Erro ao favoritar projeto"
+        );
       }
     });
   };
@@ -36,19 +37,14 @@ export const ActionFavorite = ({ project }: Props) => {
     <Button
       variant="ghost"
       size="icon"
-      className={cn(
-        "text-primary-foreground",
-        project.favorited && "text-yellow-500"
-      )}
       onClick={handleEdit}
       disabled={isPending}
     >
-      <BsStar
-        className={cn(
-          "size-5 drop-shadow-lg drop-shadow-black/25",
-          project.favorited && "text-yellow-500"
-        )}
-      />
+      {project.favorited ? (
+        <BsStarFill className="size-5 drop-shadow-lg drop-shadow-black/25 text-[#FFB23D]" />
+      ) : (
+        <BsStar className="size-5 drop-shadow-lg drop-shadow-black/25 text-primary-foreground" />
+      )}
     </Button>
   );
 };

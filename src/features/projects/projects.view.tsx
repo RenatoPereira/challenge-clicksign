@@ -1,8 +1,8 @@
 "use client";
 
 import { Project } from "@/database/schemas/project";
-import { useProjects } from "../../lib/hooks/projects.hook";
-import { ProjectCard } from "../../components/card-project";
+import { useProjects } from "@/lib/hooks/projects.hook";
+import { ProjectCard } from "./components/card-project";
 import { ProjectOrder } from "./components/order";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -18,12 +18,15 @@ export const ProjectsView = ({ projects }: Props) => {
 
   return (
     <section className="flex flex-col gap-[22px]">
-      <header className="flex items-center justify-between items-start lg:items-center">
+      <header className="flex flex-col sm:flex-row items-center justify-between items-start lg:items-center gap-8 w-full">
         <h1 className="text-2xl font-bold text-primary">
-          Projetos ({visibleProjects.length})
+          Projetos{" "}
+          <span className="text-accent text-[17px] leading-6 font-normal align-text-bottom">
+            ({visibleProjects.length})
+          </span>
         </h1>
 
-        <div className="flex flex-col lg:flex-row items-end lg:items-center gap-4 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-end lg:items-center gap-4 lg:gap-8 w-full sm:w-auto">
           <FilterFavorites />
           <ProjectOrder />
           <Link href="/new">
@@ -35,9 +38,9 @@ export const ProjectsView = ({ projects }: Props) => {
         </div>
       </header>
 
-      <ul className="flex flex-wrap gap-8">
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(346px,1fr))] gap-8">
         {visibleProjects.map((project) => (
-          <li key={project.id} className="w-[346px]">
+          <li key={project.id} className="w-full">
             <ProjectCard project={project} />
           </li>
         ))}

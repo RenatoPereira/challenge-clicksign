@@ -3,13 +3,11 @@ import projectService from "@/lib/services/project.service";
 import { SearchView } from "@/features/search/search.view";
 import { Suspense } from "react";
 
-interface Params {
-  params: {
-    search: string;
-  };
+interface RouteParams {
+  params: Promise<{ search: string }>;
 }
 
-export default async function NewProject({ params }: Params) {
+export default async function SearchPage({ params }: RouteParams) {
   const { search } = await params;
   const projects = await projectService.getAllProjects();
 

@@ -9,5 +9,5 @@ interface OrderState {
 
 export const useOrderStore = create<OrderState>()((set) => ({
   order: "alphabetical",
-  orderBy: (by) => set((state) => ({ order: by })),
+  orderBy: (by) => set(() => ({ order: by })),
 }));

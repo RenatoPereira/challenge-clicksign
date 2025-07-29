@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/popover";
 
 export function DatePicker({
-  className,
   children,
   ...props
 }: React.ComponentProps<typeof Input>) {

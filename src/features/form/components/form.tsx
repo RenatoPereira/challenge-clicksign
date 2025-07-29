@@ -49,9 +49,11 @@ export function ProjectForm({ onSubmit, project }: Props) {
     startTransition(async () => {
       try {
         await onSubmit(data);
-      } catch (error: any) {
+      } catch (error: Error | unknown) {
         console.error(error);
-        toast.error(error?.message);
+        toast.error(
+          error instanceof Error ? error.message : "Erro ao salvar projeto"
+        );
       }
     });
   };
@@ -60,7 +62,7 @@ export function ProjectForm({ onSubmit, project }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmitForm)}
-        className="space-y-8 w-[702px]"
+        className="space-y-8 w-full max-w-[702px]"
       >
         <FormField
           control={form.control}
@@ -88,7 +90,7 @@ export function ProjectForm({ onSubmit, project }: Props) {
             </FormItem>
           )}
         />
-        <div className="flex items-start gap-10">
+        <div className="flex flex-col sm:flex-row items-start gap-8 md:gap-10 w-full">
           <FormField
             control={form.control}
             name="startDate"

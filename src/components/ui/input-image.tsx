@@ -3,9 +3,10 @@ import { Input } from "./input";
 import { FaUpload } from "react-icons/fa6";
 import { FiTrash } from "react-icons/fi";
 import Image from "next/image";
+import { ControllerRenderProps } from "react-hook-form";
 
 interface Props {
-  field: any;
+  field: ControllerRenderProps<any, any>;
 }
 
 export const InputImage = ({ field }: Props) => {

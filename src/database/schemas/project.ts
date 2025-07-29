@@ -1,7 +1,5 @@
-import { z } from "zod"; // Importar z de zod
+import { z } from "zod";
 
-// Definir o schema Zod para um Projeto.
-// Zod infere automaticamente a interface Project a partir deste schema.
 export const projectSchema = z
   .object({
     id: z.string().optional(),
@@ -20,10 +18,8 @@ export const projectSchema = z
     path: ["endDate"],
   });
 
-// Inferir a interface TypeScript a partir do schema Zod
 export type Project = z.infer<typeof projectSchema>;
 
-// Schema para validar IDs de projeto (usado em DELETE e PATCH)
 export const projectIdSchema = z.object({
   id: z.string().min(1, "ID do projeto é obrigatório."),
 });

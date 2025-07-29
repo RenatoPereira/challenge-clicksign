@@ -80,6 +80,8 @@ export const useProjects = ({ projects, search }: Props) => {
   };
 
   const applySearchFilter = (items: Project[]) => {
+    if (!search) return items;
+
     const lowerCaseSearch = normalizeSearch(search || "");
 
     return items.filter(

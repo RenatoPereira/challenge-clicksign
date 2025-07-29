@@ -5,7 +5,7 @@ import { Project } from "@/database/schemas/project";
 import { useProjects } from "@/lib/hooks/projects.hook";
 import { useSearchStore } from "@/lib/stores/search.store";
 import { EmptySearch } from "@/components/ui/empty-search";
-import { ProjectCard } from "@/components/card-project";
+import { ProjectCard } from "@/features/projects/components/card-project";
 
 type Props = {
   search: string;
@@ -18,15 +18,15 @@ export const SearchView = ({ projects, search }: Props) => {
 
   useEffect(() => {
     searchBy(search);
-  }, [search]);
+  }, [searchBy, search]);
 
   return (
     <>
       {visibleProjects.length > 0 && (
         <section className="flex flex-col gap-[22px]">
-          <ul className="flex flex-wrap gap-8">
+          <ul className="grid grid-cols-[repeat(auto-fill,minmax(346px,1fr))] gap-8">
             {visibleProjects.map((project) => (
-              <li key={project.id} className="w-[346px]">
+              <li key={project.id} className="w-full">
                 <ProjectCard project={project} highlight={search} />
               </li>
             ))}

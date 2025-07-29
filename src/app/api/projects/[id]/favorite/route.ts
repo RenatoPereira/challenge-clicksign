@@ -2,16 +2,17 @@ import { NextResponse } from "next/server";
 import { getProjects, saveProjects } from "@/database/project.data";
 import { projectIdSchema, Project } from "@/database/schemas/project";
 import { z } from "zod";
+import { NextRequest } from "next/server";
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     projectIdSchema.parse({ id });
 
-    let projects = getProjects();
+    const projects = getProjects();
     const projectIndex = projects.findIndex((p: Project) => p.id === id);
 
     if (projectIndex === -1) {
@@ -21,7 +22,6 @@ export async function PATCH(
       );
     }
 
-    // Toggle the favorited status
     projects[projectIndex].favorited = !projects[projectIndex].favorited;
     saveProjects(projects);
 
