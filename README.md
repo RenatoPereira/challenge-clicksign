@@ -106,7 +106,17 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Tarefas futuras sugeridas
+## Escolhas de desenvolvimento
+
+Como é um teste, eu decidi fazer ele funcional e dei prioridade a mostrar as funcionalidades pedidas no projeto, mas não implementei funcionalidades que não foram solicitadas.
+A seguir eu listo algumas tarefas que poderiam ser implementadas para melhorar o projeto.
+
+### Tarefas futuras sugeridas
 
 - [ ] Implementar virtualização na listagem de projetos
-- [ ] Implementar cache na listagem de projetos
+- [ ] Implementar cache na listagem de projetos (podendo escolher usar o reactQuery)
+- [ ] Implementar crop de imagem
+- [ ] Implementar loading com skeleton (utilizo o loading do próprio nextjs, mas podia ser melhor)
+- [ ] Docker para containerização
+- [ ] Implementar deploy no Vercel
+- [ ] Implementar melhorias de DevEx (como testes de e2e, commitzen, etc)
