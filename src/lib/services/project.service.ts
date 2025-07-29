@@ -119,7 +119,7 @@ const projectService = {
   },
 
   toggleFavorite: async (id: string): Promise<Project> => {
-    const response = await projectsFetcher(`projects/${id}`, {
+    const response = await projectsFetcher(`projects/${id}/favorite`, {
       method: "PATCH",
     });
 
