@@ -1,49 +1,52 @@
 name: CI/CD - Lint and Test
 
-# Define os eventos que irão disparar este workflow
 on:
   push:
     branches:
       - main
       - develop
-  pull_request: # Este evento vai disparar o workflow para QUALQUER Pull Request
-    types: [opened, synchronize, reopened] # Roda quando um PR é aberto, sincronizado (novo commit) ou reaberto
+  pull_request:
+    types: [opened, synchronize, reopened]
 
-# Define os jobs (tarefas) que serão executados neste workflow
 jobs:
   lint-and-test:
     name: Lint & Test
-    runs-on: ubuntu-latest # O sistema operacional onde o job será executado
+    runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Checkout do código
-      # Clona o repositório para o runner do GitHub Actions
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Passo 2: Configurar Node.js
-      # Instala uma versão específica do Node.js
-      - name: Set up Node.js
+      # Passo 1: Configurar Node.js e pnpm
+      # Usa a ação setup-node para configurar o Node.js
+      # E explicitamente informa para instalar o pnpm
+      - name: Set up Node.js and pnpm
         uses: actions/setup-node@v4
         with:
           node-version: "20" # Use a versão do Node.js que seu projeto utiliza
+          cache: "pnpm" # Habilita o cache para o pnpm, o que acelera builds subsequentes
 
-      # Passo 3: Instalar dependências
-      # Roda 'npm ci' que é mais recomendado para CI do que 'npm install'
-      - name: Install dependencies
-        run: npm ci
+      # Passo 2: Instalar dependências com pnpm
+      # Roda 'pnpm install'
+      - name: Install dependencies with pnpm
+        run: pnpm install --frozen-lockfile # '--frozen-lockfile' garante que o lockfile não seja modificado
 
-      # Passo 4: Rodar ESLint
-      # Executa o comando de linting configurado no seu package.json
-      - name: Run ESLint
-        run: npm run lint
+      # Passo 3: Rodar ESLint com pnpm
+      # Usa 'pnpm lint'
+      - name: Run ESLint with pnpm
+        run: pnpm lint
 
-      # Passo 5: Rodar Testes Jest/RTL
-      # Executa o comando de teste configurado no seu package.json
-      # As variáveis de ambiente CLOUDINARY e NEXT_PUBLIC_API_BASE_URL são necessárias para os testes.
-      # Para um ambiente CI, é comum mockar respostas de API ou fornecer credenciais dummy/testes.
-      # As variáveis abaixo são as que você definiu no jest.setup.ts, então podemos simplesmente defini-las aqui.
-      - name: Run Tests
-        run: npm test
+      # Passo 4: Rodar Testes Jest/RTL com pnpm
+      # Usa 'pnpm test'
+      - name: Run Tests with pnpm
+        run: pnpm test
         env:
           NEXT_PUBLIC_API_BASE_URL: http://localhost:3000/api
+
+      # Opcional: Upload de resultados de cobertura de código
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: ./coverage/lcov.info
+      #     verbose: true
