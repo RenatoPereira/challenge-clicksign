@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { ProjectsView } from "./projects.view";
+import { ProjectsView } from "./projects.container";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -7,7 +7,7 @@ jest.mock("next/navigation", () => ({
 
 describe("ProjectsView", () => {
   it("should render the projects view", () => {
-    const { getByText } = render(<ProjectsView projects={[]} />);
+    const { getByText } = render(<ProjectsView />);
 
     const projectsView = getByText("Projetos");
     expect(projectsView).toBeInTheDocument();
