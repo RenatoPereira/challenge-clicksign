@@ -5,7 +5,7 @@ import { useOrderStore } from "@/lib/stores/order.store";
 import { normalizeSearch } from "@/lib/utils";
 
 type Props = {
-  projects: Project[];
+  projects: Project[] | undefined;
   search?: string;
 };
 
@@ -92,11 +92,13 @@ export const useProjects = ({ projects, search }: Props) => {
   };
 
   useEffect(() => {
-    const favoritedProjects = applyFavoritesFilter(projects);
-    const filteredProjects = applySearchFilter(favoritedProjects);
-    const orderedProjects = applyOrderFilter(filteredProjects);
+    if (projects) {
+      const favoritedProjects = applyFavoritesFilter(projects);
+      const filteredProjects = applySearchFilter(favoritedProjects);
+      const orderedProjects = applyOrderFilter(filteredProjects);
 
-    setVisibleProjects(orderedProjects);
+      setVisibleProjects(orderedProjects);
+    }
   }, [projects, filter, order, search]);
 
   return {
